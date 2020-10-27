@@ -12,8 +12,8 @@ function InterviewerList (props) {
               key={item.id}
               name={item.name}
               avatar={item.avatar}
-              selected={item.id === props.interviewer}
-              setInterviewer={event => props.setInterviewer(item.id)}
+              selected={item.id === props.value}
+              onChange={event => props.onChange(item.id)}
               />
             })}
           </ul>
