@@ -10,8 +10,14 @@ import DayListItem from "components/DayListItem";
 import DayList from "components/DayList";
 import InterviewerListItem from "components/InterviewerListItem";
 import InterviewerList from "components/InterviewerList";
-import Application from "components/Application";
 import Appointment from "components/Appointment";
+import Header from "components/Appointment/Header";
+import Empty from "components/Appointment/Empty";
+import Show from "components/Appointment/Show";
+import Confirm from "components/Appointment/Confirm";
+import Status from "components/Appointment/Status";
+import Error from "components/Appointment/Error";
+
 
 
 
@@ -92,55 +98,62 @@ storiesOf("InterviewerListItem", module)
       id={interviewer.id}
       name={interviewer.name}
       avatar={interviewer.avatar}
-      />
+    />
   ))
   .add("Selected", () => (
     <InterviewerListItem
-    id={interviewer.id}
-    name={interviewer.name}
-    avatar={interviewer.avatar}
-    selected
+      id={interviewer.id}
+      name={interviewer.name}
+      avatar={interviewer.avatar}
+      selected
     />
   ))
   .add("Clickable", () => (
     <InterviewerListItem
-    id={interviewer.id}
-    name={interviewer.name}
-    avatar={interviewer.avatar}
-    onChange={event => action("setInterviewer")(interviewer.id)}
+      id={interviewer.id}
+      name={interviewer.name}
+      avatar={interviewer.avatar}
+      onChange={event => action("setInterviewer")(interviewer.id)}
     />
   ))
 
-  // mock data
-  const interviewers = [
-    { id: 1, name: "Sylvia Palmer", avatar: "https://i.imgur.com/LpaY82x.png" },
-    { id: 2, name: "Tori Malcolm", avatar: "https://i.imgur.com/Nmx0Qxo.png" },
-    { id: 3, name: "Mildred Nazir", avatar: "https://i.imgur.com/T2WwVfS.png" },
-    { id: 4, name: "Cohana Roy", avatar: "https://i.imgur.com/FK8V841.jpg" },
-    { id: 5, name: "Sven Jones", avatar: "https://i.imgur.com/twYrpay.jpg" }
-  ];
-  
-  storiesOf("InterviewerList", module)
-    .addParameters({
-      backgrounds: [{ name: "dark", value: "#222f3e", default: true }]
-    })
-    .add("Initial", () => (
-      <InterviewerList
-        interviewers={interviewers}
-        onChange={action("setInterviewer")}
-      />
-    ))
-    .add("Preselected", () => (
-      <InterviewerList
-        interviewers={interviewers}
-        value={3}
-        onChange={action("setInterviewer")}
-      />
-    ));
+// mock data
+const interviewers = [
+  { id: 1, name: "Sylvia Palmer", avatar: "https://i.imgur.com/LpaY82x.png" },
+  { id: 2, name: "Tori Malcolm", avatar: "https://i.imgur.com/Nmx0Qxo.png" },
+  { id: 3, name: "Mildred Nazir", avatar: "https://i.imgur.com/T2WwVfS.png" },
+  { id: 4, name: "Cohana Roy", avatar: "https://i.imgur.com/FK8V841.jpg" },
+  { id: 5, name: "Sven Jones", avatar: "https://i.imgur.com/twYrpay.jpg" }
+];
 
-    storiesOf("Appointment", module)
-      .addParameters({
-        backgrounds: [{ name: "white", value: "#fff", default: true }]
-      })
-      .add("Appointment", () => <Appointment />)
-      .add("Appointment with Time", () => <Appointment time="12pm" />);
+storiesOf("InterviewerList", module)
+  .addParameters({
+    backgrounds: [{ name: "dark", value: "#222f3e", default: true }]
+  })
+  .add("Initial", () => (
+    <InterviewerList
+      interviewers={interviewers}
+      onChange={action("setInterviewer")}
+    />
+  ))
+  .add("Preselected", () => (
+    <InterviewerList
+      interviewers={interviewers}
+      value={3}
+      onChange={action("setInterviewer")}
+    />
+  ));
+
+storiesOf("Appointment", module)
+  .addParameters({
+    backgrounds: [{ name: "white", value: "#fff", default: true }]
+  })
+  .add("Appointment", () => <Appointment />)
+  .add("Appointment with Time", () => <Appointment time="12pm" />)
+  .add("Header", () => <Header time="12pm" />)
+  .add("Empty", () => <Empty onAdd={action("onAdd")} />)
+  .add("Show", () => <Show student="Bruce Wayne" interviewer="Clark Kent" onEdit={action("onEdit")} onDelete={action("onDelete")} />)
+  .add("Confirm", () => <Confirm message="Delete the appointment?" onConfirm={action("onConfirm")} onCancel={action("onCancel")} />)
+  .add("Status", () => <Status message="Deleting" />)
+  .add("Error", () => <Error message="Could not delete appointment" onClose={action("onClose")} />);
+
