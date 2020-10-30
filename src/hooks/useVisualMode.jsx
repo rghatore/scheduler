@@ -5,8 +5,13 @@ function useVisualMode (initialMode) {
   const [mode, setMode] = useState(initialMode);
   const [history, setHistory] = useState([initialMode]);
 
-  const transition = (nextMode) => {
-    setHistory([...history, nextMode]);
+  const transition = (nextMode, replace = false) => {
+    if(replace) {
+      setHistory((prev) => [...prev].slice(0, prev.length - 1))
+    }
+
+    setHistory((prev) => [...prev, nextMode]);
+
     // setMode(nextMode);
     // console.log("transition: ", setMode(nextMode));
     // return setHistory([...history, nextMode]);
