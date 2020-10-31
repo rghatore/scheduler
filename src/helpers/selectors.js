@@ -23,3 +23,16 @@ export function getInterview(state, interview) {
   // console.log(obj);
   return { ...interview, interviewer: state.interviewers[interview.interviewer] };
 }
+
+export function getInterviewersForDay(state, day) {
+  //  get object for a particular day
+  const specificDay = state.days.find(item => item.name === day)
+
+  if(!specificDay) {
+    return [];
+  }
+  // get appointments array
+  //  match appointment ids and return appointments data array
+  const interviewersData = specificDay.interviewers.map(item => state.interviewers[item])
+  return interviewersData;
+}

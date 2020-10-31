@@ -45,7 +45,7 @@ function Appointment (props) {
         <Form
           name={props.name}
           interview={props.interview}
-          interviewers={[]}
+          interviewers={props.interviewers}
           onCancel={() => back(EMPTY)}
           onSave={() => console.log("Clicked onSave")}
         />

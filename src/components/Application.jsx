@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import "components/Application.scss";
 import DayList from "./DayList";
 import Appointment from "./Appointment";
-import { getAppointmentsForDay, getInterview } from "../helpers/selectors";
+import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "../helpers/selectors";
 const axios = require("axios");
 
 export default function Application(props) {
@@ -31,23 +31,22 @@ export default function Application(props) {
       // console.log("booking: ", booking);
       const appointment = {...booking, interview: interview}
       // console.log("appointment: ", appointment);
-      return <Appointment key={appointment.id} {...appointment}  />
+      return (
+        <Appointment
+        key={appointment.id}
+        interviewers ={getInterviewersForDay(state, state.day)}
+        {...appointment}
+        />
+        )
     })
   }
 
   useEffect(() => {
-    // axios.get('/api/days')
-    // .then(response => {
-      // console.log(response.data);
-      // setDays(response.data);
-    // })
     Promise.all([
       axios.get('/api/days'),
       axios.get('/api/appointments'),
       axios.get('/api/interviewers')
     ]).then((all) => {
-      // console.log('days: ', all[0].data);
-      // console.log('appointments: ', all[1].data);
       setState(prev => ({
         ...prev,
         days: all[0].data,
