@@ -4,6 +4,7 @@ import "./styles.scss";
 import Header from "./Header";
 import Show from "./Show";
 import Empty from "./Empty";
+import Form from "./Form";
 import useVisualMode from "../../hooks/useVisualMode";
 
 
@@ -14,6 +15,7 @@ function Appointment (props) {
   // console.log(student, interviewer);
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
+  const CREATE = "CREATE";
 
   // props.interview ? useVisualMode(SHOW) : useVisualMode(EMPTY);
   const { mode, transition, back } = useVisualMode(
@@ -25,13 +27,28 @@ function Appointment (props) {
     // return props.interview ? <Show student={props.interview.student} interviewer={props.interview.interviewer} /> : <Empty />
     // return props.interview ? <Show student interviewer /> : <Empty />
     if (mode === EMPTY) {
-      return <Empty onAdd={() => console.log("Clicked onAdd")} />
+      return (
+        <Empty
+          onAdd={() => transition(CREATE)}
+        />
+      )
     } else if (mode === SHOW) {
       return (
-      <Show
-        student={props.interview.student}
-        interviewer={props.interview.interviewer}
-      />
+        <Show
+          student={props.interview.student}
+          interviewer={props.interview.interviewer}
+        />
+      )
+    } else if (mode === CREATE) {
+      return (
+        // name interview interviewer onCancel onSave
+        <Form
+          name={props.name}
+          interview={props.interview}
+          interviewers={[]}
+          onCancel={() => back(EMPTY)}
+          onSave={() => console.log("Clicked onSave")}
+        />
       )
     }
   }
