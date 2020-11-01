@@ -30,9 +30,11 @@ function Appointment (props) {
     };
     // console.log("interview: ", interview);
     // update state
-    props.bookInterview(props.id, interview);
-    // change visual state to show
-    transition(SHOW);
+    props.bookInterview(props.id, interview)
+    .then(() => {
+      // change visual state to show
+      transition(SHOW);
+    })
   }
 
   const slot = () => {

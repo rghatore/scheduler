@@ -25,20 +25,28 @@ export default function Application(props) {
   // const setDays = days => setState(prev => ({...prev, days}));
 
   function bookInterview(id, interview) {
-    // console.log("bookInterview: ", id, interview);
-    // copying appointment object at particular id
-    // replacing interview null to interview with data
-    const appointment = {
-      ...state.appointments[id],
-      interview: { ...interview }
-    };
-    // copying appointmentS object and updating with new appointment data
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-    // set new state
-    setState({...state, appointments});
+    console.log("bookInterview: ", id, interview);
+    
+    // put request to udpate the database
+    return axios.put(
+      `/api/appointments/${id}`,
+      {interview: {...interview}}
+    ).then(() => {
+      // console.log("UDPATED!")
+      // copying appointment object at particular id
+      // replacing interview null to interview with data
+      const appointment = {
+        ...state.appointments[id],
+        interview: { ...interview }
+      };
+      // copying appointmentS object and updating with new appointment data
+      const appointments = {
+        ...state.appointments,
+        [id]: appointment
+      };
+      // set new state
+      setState({...state, appointments});
+    }).catch(error => console.log(error.message)) 
   }
 
   function interviewSpots (bookings) {
