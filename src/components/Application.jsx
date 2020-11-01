@@ -24,6 +24,10 @@ export default function Application(props) {
   const setDay = day => setState({...state, day});
   // const setDays = days => setState(prev => ({...prev, days}));
 
+  function bookInterview(id, interview) {
+    console.log("bookInterview: ", id, interview);
+  }
+
   function interviewSpots (bookings) {
     return bookings.map((booking) => { 
       const interview = getInterview(state, booking.interview);
@@ -34,6 +38,7 @@ export default function Application(props) {
       return (
         <Appointment
         key={appointment.id}
+        bookInterview={bookInterview}
         interviewers ={getInterviewersForDay(state, state.day)}
         {...appointment}
         />

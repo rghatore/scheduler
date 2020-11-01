@@ -22,6 +22,16 @@ function Appointment (props) {
     props.interview ? SHOW : EMPTY
   );
 
+  // to save data in the form save event
+  function save(name, interviewer) {
+    const interview = {
+      student: name,
+      interviewer
+    };
+    // console.log("interview: ", interview);
+    props.bookInterview(props.id, interview);
+  }
+
   const slot = () => {
     // const {student, interviewer} = props.interview;
     // return props.interview ? <Show student={props.interview.student} interviewer={props.interview.interviewer} /> : <Empty />
@@ -47,7 +57,7 @@ function Appointment (props) {
           interview={props.interview}
           interviewers={props.interviewers}
           onCancel={() => back(EMPTY)}
-          onSave={() => console.log("Clicked onSave")}
+          onSave={(name, interviewer) => save(name, interviewer)}
         />
       )
     }

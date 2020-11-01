@@ -44,6 +44,9 @@ function Form(props) {
       <section className="appointment__card-right">
         <section className="appointment__actions">
           <Button onClick={cancel} danger>Cancel</Button>
+          {/* {console.log("props.onSave: ", props.onSave)} */}
+          {/* {console.log("name: ", name)} */}
+          {/* {console.log("interviewer: ", interviewer)} */}
           <Button onClick={save} confirm>Save</Button>
         </section>
       </section>
