@@ -29,7 +29,10 @@ function Appointment (props) {
       interviewer
     };
     // console.log("interview: ", interview);
+    // update state
     props.bookInterview(props.id, interview);
+    // change visual state to show
+    transition(SHOW);
   }
 
   const slot = () => {
