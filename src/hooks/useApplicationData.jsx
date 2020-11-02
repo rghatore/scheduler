@@ -68,67 +68,33 @@ function useApplicationData() {
 
 
   useEffect(() => {
-    console.log("use effect when updating appointments")
-    console.log("use effect state.appointments: ", state.appointments);
-    console.log("use effect state.day: ", state.day);
-    console.log("use effect state.days: ", state.days);
     if (state.days.length > 0) {
-      const index = state.days.findIndex(item => item.name === state.day); // this works
-      console.log("use effect index: ", index);
-      const appointments = state.days[index].appointments
-      console.log("use effect appointments: ", appointments);
-      const spots = appointments.filter(item => !state.appointments[item].interview).length;
-      console.log("spots: ", spots);
-      const day = {
-        ...state.days[index],
-        spots
-      }
-      console.log("use effect day object: ", day); // working upto here
-      const days = [...state.days]
-      days.splice(index, 1, day);
-      console.log("use effect days array :", days);
-      setState(prev => ({ ...prev, days}));
+      spotsRemaining();
     }
   }, [state.appointments]);
 
-    function spotsRemaining() {
-      // when saving or deleting - update spots
-      // for (const item of state.days) {
-        // const appointments = item.appointments.find
-      // }
-      // setState(prev => ({...prev}));
-      // console.log("state.days: ", state.days);
-      // console.log("id: ", id);
-      
-      const index = state.days.findIndex(item => item.name === state.day); // this works
-      // console.log("index: ", index);
-      
-      const appointments = state.days[index].appointments
-      // console.log("appointments: ", appointments);
-      // console.log("state.appointments: ", state.appointments);
-      // update state
-      // const spots = appointments.filter(spot => !spot.interview).length;
-      const spots = appointments.filter(item => !state.appointments[item].interview).length;
-
-      // const days = {...state.days}
-      console.log("spots: ", spots);
-      // replacing spots on a particular day
-      // copy day object from state
-      const day = {
-        ...state.days[index],
-        spots
-      }
-      console.log(day); // working upto here
-      // copy days from state and replace object at index
-      // const days = [...state.days].splice(index, 1, day); // this returns only the deleted element
-      const days = [...state.days]
-      days.splice(index, 1, day);
-      // replacing days in state
-      setState(prev => ({ ...prev, days}));
+  // update spots remaining value when saving or deleting appointments
+  function spotsRemaining() {
+    // find index in the days array
+    const index = state.days.findIndex(item => item.name === state.day);
+    // get appointments array on that day
+    const appointments = state.days[index].appointments
+    // count appointments which have null interview value
+    const spots = appointments.filter(item => !state.appointments[item].interview).length;
+    // copy day object from state and replace spots
+    const day = {
+      ...state.days[index],
+      spots
     }
-  // }, [state.appointments])
+    // const days = [...state.days].splice(index, 1, day); // this returns only the deleted element
+    // copy days array from state and replace with updated day object
+    const days = [...state.days]
+    days.splice(index, 1, day);
+    // update state withe updated days array
+    setState(prev => ({ ...prev, days }));
+  }
 
-  return { state, setDay, bookInterview, cancelInterview, spotsRemaining }
+  return { state, setDay, bookInterview, cancelInterview }
 }
 
 export default useApplicationData;
