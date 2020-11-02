@@ -7,6 +7,8 @@ import Empty from "./Empty";
 import Form from "./Form";
 import Status from "./Status";
 import Confirm from "./Confirm";
+import Error from "./Error";
+
 import useVisualMode from "../../hooks/useVisualMode";
 
 
@@ -22,6 +24,8 @@ function Appointment (props) {
   const DELETING = "DELETING";
   const CONFIRM = "CONFIRM";
   // const EDIT = "EDIT"; // didn't need this - used create with existing student and interview states
+  const ERROR_SAVE = "ERROR_SAVE";
+  const ERROR_DELETE = "ERROR_DELETE";
 
 
   // props.interview ? useVisualMode(SHOW) : useVisualMode(EMPTY);
@@ -45,6 +49,7 @@ function Appointment (props) {
       // change visual state to show (pessimistic approach)
       transition(SHOW);
     })
+    .catch(() => transition(ERROR_SAVE, true))
   }
 
   // to delete an interview
@@ -52,13 +57,14 @@ function Appointment (props) {
     // confirm delete
     // transition(CONFIRM);
     // show deleting status
-    console.log("Hello Hello")
-    transition(DELETING);
+    // console.log("Hello Hello")
+    transition(DELETING, true);
     // call cancelInterview function
     props.cancelInterview(props.id)
     .then(() => {
       transition(EMPTY);
     })
+    .catch(() => transition(ERROR_DELETE, true))
   }
 
   const slot = () => {
@@ -106,6 +112,20 @@ function Appointment (props) {
           message={'Are you sure you would like to delete?'}
           onConfirm={() => onDelete()}
           onCancel={() => back()}
+        />
+      )
+    } else if (mode === ERROR_SAVE) {
+      return (
+        <Error
+          message={'Sorry, error encountered while saving!'}
+          onClose={() => back()}
+        />
+      )
+    } else if (mode === ERROR_DELETE) {
+      return (
+        <Error
+          message={'Sorry, error encountered while deleting!'}
+          onClose={() => back()}
         />
       )
     }

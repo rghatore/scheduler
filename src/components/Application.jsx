@@ -46,7 +46,8 @@ export default function Application(props) {
       };
       // set new state
       setState({...state, appointments});
-    }).catch(error => console.log(error.message)) 
+    })
+    // .catch(error => console.log(error.message)) 
   }
 
   function cancelInterview(id) {
@@ -63,7 +64,8 @@ export default function Application(props) {
         [id]: appointment
       }
       setState({...state, appointments})
-    }).catch(error => console.log(error.message))
+    })
+    // .catch(error => console.log(error.message))
   }
 
   function interviewSpots (bookings) {
