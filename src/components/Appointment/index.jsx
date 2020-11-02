@@ -14,7 +14,7 @@ import useVisualMode from "../../hooks/useVisualMode";
 
 
 function Appointment (props) {
-  // console.log('props: ', props)
+  // console.log('props from appointment: ', props)
   // const { student, interviewer } = props.interview;
   // console.log(student, interviewer);
   const EMPTY = "EMPTY";
@@ -48,6 +48,9 @@ function Appointment (props) {
     .then(() => {
       // change visual state to show (pessimistic approach)
       transition(SHOW);
+      // console.log('props.id: '. props.id)
+      // props.spotsRemaining(props.id);
+      // props.spotsRemaining(props.id);
     })
     .catch(() => transition(ERROR_SAVE, true))
   }
@@ -63,6 +66,8 @@ function Appointment (props) {
     props.cancelInterview(props.id)
     .then(() => {
       transition(EMPTY);
+      // console.log('props.id: '. props.id)
+      // props.spotsRemaining(props.id);
     })
     .catch(() => transition(ERROR_DELETE, true))
   }

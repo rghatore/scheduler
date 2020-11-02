@@ -9,16 +9,20 @@ import useApplicationData from "hooks/useApplicationData";
 // const axios = require("axios");
 
 export default function Application(props) {
-  
+
   const {
     state,
     setDay,
     bookInterview,
-    cancelInterview
+    cancelInterview,
+    spotsRemaining
   } = useApplicationData();
   
   let dailyAppointments = [];
-
+  
+  dailyAppointments = getAppointmentsForDay(state, state.day);
+  // console.log("appointments: ", dailyAppointments[0]);
+  
   function interviewSpots (bookings) {
     return bookings.map((booking) => { 
       const interview = getInterview(state, booking.interview);
@@ -28,14 +32,13 @@ export default function Application(props) {
         key={appointment.id}
         bookInterview={bookInterview}
         cancelInterview={cancelInterview}
+        spotsRemaining={spotsRemaining}
         interviewers={getInterviewersForDay(state, state.day)}
         {...appointment}
         />
         )
     })
   }
-
-  dailyAppointments = getAppointmentsForDay(state, state.day);
 
   return (
     <main className="layout">
