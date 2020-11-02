@@ -25,7 +25,7 @@ export default function Application(props) {
   // const setDays = days => setState(prev => ({...prev, days}));
 
   function bookInterview(id, interview) {
-    console.log("bookInterview: ", id, interview);
+    // console.log("bookInterview: ", id, interview);
     
     // put request to udpate the database
     return axios.put(
