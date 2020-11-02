@@ -5,6 +5,8 @@ import InterviewerList from "../InterviewerList";
 
 function Form(props) {
 
+  // console.log('props in form: ', props)
+
   let [name, setName] = useState(props.name || "");
   let [interviewer, setInterviewer] = useState(props.interviewer || null);
 

@@ -21,6 +21,7 @@ function Appointment (props) {
   const SAVING = "SAVING";
   const DELETING = "DELETING";
   const CONFIRM = "CONFIRM";
+  // const EDIT = "EDIT"; // didn't need this - used create with existing student and interview states
 
 
   // props.interview ? useVisualMode(SHOW) : useVisualMode(EMPTY);
@@ -76,14 +77,16 @@ function Appointment (props) {
           student={props.interview.student}
           interviewer={props.interview.interviewer}
           onDelete={() => transition(CONFIRM)}
+          onEdit={() => transition(CREATE)}
         />
       )
     } else if (mode === CREATE) {
       return (
         // name interview interviewer onCancel onSave
+        
         <Form
-          name={props.name}
-          interview={props.interview}
+          name={props.interview && props.interview.student}
+          interviewer={props.interview && props.interview.interviewer.id}
           interviewers={props.interviewers}
           onCancel={() => back()}
           onSave={(name, interviewer) => save(name, interviewer)}
