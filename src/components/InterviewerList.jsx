@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 
 import "components/InterviewerList.scss"
 import InterviewerListItem from "./InterviewerListItem";
@@ -20,5 +21,11 @@ function InterviewerList (props) {
           </ul>
           </section>
 }
+
+// check props type
+InterviewerList.propTypes = {
+  interviewers: PropTypes.array.isRequired
+};
+
 
 export default InterviewerList;
