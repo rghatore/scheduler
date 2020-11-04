@@ -71,4 +71,19 @@ describe("Form", () => {
     /* onSave is called with the correct arguments */
     expect(onSave).toHaveBeenCalledWith("Clark Kent", null);
   });
+  
+  test("submits the name entered by the user", () => {
+    const onSave = jest.fn();
+    const { getByText, getByPlaceholderText } = render(
+      <Form interviewers={interviewers} onSave={onSave} />
+    );
+  
+    const input = getByPlaceholderText("Enter Student Name");
+  
+    fireEvent.change(input, { target: { value: "Clark Kent" } });
+    fireEvent.click(getByText("Save"));
+  
+    expect(onSave).toHaveBeenCalledTimes(1);
+    expect(onSave).toHaveBeenCalledWith("Clark Kent", null);
+  });
 });
