@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-const axios = require("axios");
+// const axios = require("axios"); // don't do this
+import axios from "axios";
 
 function useApplicationData() {
 
@@ -12,6 +13,7 @@ function useApplicationData() {
 
   //  initial state
   useEffect(() => {
+    // console.log("axios inside useApplicationData: ", axios)
     Promise.all([
       axios.get('/api/days'),
       axios.get('/api/appointments'),
@@ -43,6 +45,11 @@ function useApplicationData() {
         ...state.appointments,
         [id]: appointment
       };
+      /* 
+      could use the updated appointments object to run spots remaining function
+      to update the days object
+      - that way we would only have to set state once
+      */
       // set new state
       setState(prev => ({ ...prev, appointments }));
     })
