@@ -113,9 +113,9 @@ describe("Application", () => {
     const appointment = getAllByTestId(container, "appointment").find(
       appointment => queryByText(appointment, "Archie Cohen")
     );
-    
+
     fireEvent.click(queryByAltText(appointment, "Edit"));
-    
+
     // 4. Check that the form with name Archie Cohen is shown.
     // console.log(prettyDOM(appointment));
     expect(getByDisplayValue(appointment, /Archie Cohen/i)).toBeInTheDocument();
@@ -162,13 +162,47 @@ describe("Application", () => {
     // get error
     await waitForElementToBeRemoved(() => getByText(appointment, "Saving"));
     expect(getByText(appointment, /error encountered/i)).toBeInTheDocument();
-    
+
     // close the error
     fireEvent.click(getByAltText(appointment, "Close"));
     // debug();
 
-    // go back to empty
+    // go back to form
     expect(getByTestId(appointment, /student-name-input/i)).toBeInTheDocument();
   });
 
+  test("shows the delete error when failing to delete an existing appointment", async () => {
+    axios.delete.mockRejectedValueOnce();
+    // render application
+    const { container, debug } = render(<Application />);
+
+    // wait for data to load 
+    await waitForElement(() => getByText(container, "Archie Cohen"));
+
+    // try to delete
+    const appointment = getAllByTestId(container, "appointment").find(
+      appointment => queryByText(appointment, "Archie Cohen")
+    );
+
+    fireEvent.click(getByAltText(appointment, "Delete"));
+    
+    // get confirmation
+    expect(getByText(appointment, /are you sure/i)).toBeInTheDocument();
+    // debug();
+    
+    fireEvent.click(getByText(appointment, "Confirm"));
+
+    // get delete
+    expect(getByText(appointment, "Deleting")).toBeInTheDocument();
+
+    // get error
+    await waitForElementToBeRemoved(() => getByText(appointment, "Deleting"));
+    expect(getByText(appointment, /error encountered/i)).toBeInTheDocument();
+
+    // close the error
+    fireEvent.click(getByAltText(appointment, "Close"));
+
+    // go back to show
+    expect(getByText(appointment, /Archie/i)).toBeInTheDocument();
+  });
 });
