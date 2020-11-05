@@ -7,6 +7,7 @@ import {
   fireEvent,
   getByText,
   prettyDOM,
+  getByTestId,
   getAllByTestId,
   getByAltText,
   getByPlaceholderText,
@@ -138,5 +139,36 @@ describe("Application", () => {
     const day = getAllByTestId(container, "day").find(day => queryByText(day, "Monday"));
     expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
   })
+
+  test("shows the save error when failing to save an appointment", async () => {
+    axios.put.mockRejectedValueOnce();
+    // render application
+    const { container, debug } = render(<Application />);
+
+    // try to save
+    await waitForElement(() => getByText(container, "Archie Cohen"));
+    const appointment = getAllByTestId(container, "appointment")[0];
+    fireEvent.click(getByAltText(appointment, "Add"));
+    fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
+      target: { value: "Lydia Miller-Jones" }
+    });
+
+    fireEvent.click(getByAltText(appointment, "Sylvia Palmer"));
+
+    fireEvent.click(getByText(appointment, "Save"));
+    // get saving
+    expect(getByText(appointment, "Saving")).toBeInTheDocument();
+
+    // get error
+    await waitForElementToBeRemoved(() => getByText(appointment, "Saving"));
+    expect(getByText(appointment, /error encountered/i)).toBeInTheDocument();
+    
+    // close the error
+    fireEvent.click(getByAltText(appointment, "Close"));
+    // debug();
+
+    // go back to empty
+    expect(getByTestId(appointment, /student-name-input/i)).toBeInTheDocument();
+  });
 
 });
