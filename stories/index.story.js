@@ -50,10 +50,6 @@ storiesOf("DayListItem", module) //Initiates Storybook and registers our DayList
     <DayListItem name="Tuesday" setDay={action("setDay")} spots={5} /> // action() allows us to create a callback that appears in the actions panel when clicked
   ));
 
-// const test = (test) => {
-//   console.log(typeof test);
-// }
-
 const days = [
   {
     id: 1,
@@ -152,7 +148,7 @@ storiesOf("Appointment", module)
   })
   .add("Appointment", () => <Appointment />)
   .add("Appointment with Time", () => <Appointment time="12pm" />)
-  .add("Appointment Empty", () => 
+  .add("Appointment Empty", () =>
     <>
       <Appointment id={1} time="12pm" />
       <Appointment id="last" time="1pm" />

@@ -1,12 +1,7 @@
-// We are testing a react component, so we need React.createElement
 import React from "react";
-// We import our helper functions from the react-testing-library
 import { render, cleanup, fireEvent } from "@testing-library/react";
-// We import the component that we are testing
 import Form from "../Appointment/Form";
-/*
-  A test that renders a React Component
-*/
+
 afterEach(cleanup);
 
 describe("Form", () => {
@@ -34,20 +29,15 @@ describe("Form", () => {
   });
 
   test("validates that the student name is not blank", () => {
-    /* 1. Create the mock onSave function */
     const onSave = jest.fn();
-    /* 2. Render the Form with interviewers and the onSave mock function passed as an onSave prop, the name prop should be blank or undefined */
     const { getByText } = render(
       <Form
         interviewers={interviewers}
         onSave={onSave}
       />
     )
-    /* 3. Click the save button */
     fireEvent.click(getByText("Save"));
-    /* validation is shown */
     expect(getByText(/student name cannot be blank/i)).toBeInTheDocument();
-    /* onSave is not called */
     expect(onSave).not.toHaveBeenCalled();
   });
 

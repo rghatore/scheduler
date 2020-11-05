@@ -1,12 +1,10 @@
 import React from "react";
-// import React, { useState, useEffect } from "react";
 
 import "components/Application.scss";
 import DayList from "./DayList";
 import Appointment from "./Appointment";
 import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "../helpers/selectors";
 import useApplicationData from "hooks/useApplicationData";
-// const axios = require("axios");
 
 export default function Application(props) {
 
@@ -15,28 +13,26 @@ export default function Application(props) {
     setDay,
     bookInterview,
     cancelInterview
-    // spotsRemaining
   } = useApplicationData();
-  
+
   let dailyAppointments = [];
-  
+
   dailyAppointments = getAppointmentsForDay(state, state.day);
-  // console.log("appointments: ", dailyAppointments[0]);
-  
-  function interviewSpots (bookings) {
-    return bookings.map((booking) => { 
+
+  function interviewSpots(bookings) {
+    return bookings.map((booking) => {
       const interview = getInterview(state, booking.interview);
-      const appointment = {...booking, interview: interview}
+      const appointment = { ...booking, interview: interview }
       return (
         <Appointment
-        key={appointment.id}
-        bookInterview={bookInterview}
-        cancelInterview={cancelInterview}
-        // spotsRemaining={spotsRemaining}
-        interviewers={getInterviewersForDay(state, state.day)}
-        {...appointment}
+          key={appointment.id}
+          bookInterview={bookInterview}
+          cancelInterview={cancelInterview}
+          // spotsRemaining={spotsRemaining}
+          interviewers={getInterviewersForDay(state, state.day)}
+          {...appointment}
         />
-        )
+      )
     })
   }
 

@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-// const axios = require("axios"); // don't do this
 import axios from "axios";
 
 function useApplicationData() {
@@ -13,7 +12,6 @@ function useApplicationData() {
 
   //  initial state
   useEffect(() => {
-    // console.log("axios inside useApplicationData: ", axios)
     Promise.all([
       axios.get('/api/days'),
       axios.get('/api/appointments'),
@@ -45,11 +43,6 @@ function useApplicationData() {
         ...state.appointments,
         [id]: appointment
       };
-      /* 
-      could use the updated appointments object to run spots remaining function
-      to update the days object
-      - that way we would only have to set state once
-      */
       // set new state
       setState(prev => ({ ...prev, appointments }));
     })
@@ -82,19 +75,13 @@ function useApplicationData() {
 
   // update spots remaining value when saving or deleting appointments
   function spotsRemaining() {
-    // find index in the days array
     const index = state.days.findIndex(item => item.name === state.day);
-    // get appointments array on that day
     const appointments = state.days[index].appointments
-    // count appointments which have null interview value
     const spots = appointments.filter(item => !state.appointments[item].interview).length;
-    // copy day object from state and replace spots
     const day = {
       ...state.days[index],
       spots
     }
-    // const days = [...state.days].splice(index, 1, day); // this returns only the deleted element
-    // copy days array from state and replace with updated day object
     const days = [...state.days]
     days.splice(index, 1, day);
     // update state withe updated days array
