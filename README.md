@@ -1,4 +1,5 @@
 # Interview Scheduler
+A React project completed during a web development bootcamp at Lighthouse Labs.
 
 ## Setup
 
@@ -21,3 +22,8 @@ npm test
 ```sh
 npm run storybook
 ```
+
+## Screenshots
+<img src="https://github.com/rghatore/scheduler/blob/master/docs/schedular_main.png?raw=true" alt="main" width="800px" />
+<img src="https://github.com/rghatore/scheduler/blob/master/docs/scheduler-form.png?raw=true" alt="main" width="800px" />
+
